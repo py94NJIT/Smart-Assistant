@@ -10,13 +10,14 @@ r= sr.Recognizer()
 engine = pyttsx3.init()
 
 #Weather API Key and Base URL
-API_KEY = "YourKey"
+API_KEY = "yourkey"
 #Url Format after timeline/location/date/key
-weather_url = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/London,UK/2020-10-01/2020-12-31?key=YOURAPIKEY"
+weather_url = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/08902/2025-12-10?key=apikey"
 
 # Initialize requests
-request = requests.get(weather_url)
-weather_data = request.json()
+response = requests.get(weather_url)
+weather_data = response.json()
+print(response.status_code)
 
 #Speak
 def speak(text):
@@ -54,8 +55,12 @@ def process_command(command):
         return True
     elif "weather" in command:
         # Location based on current user location
-        address = weather_data['address']
-        speak("The current weather for {weather_data['address']} is {weather_data['conditions']}]")
+        #day is specified date in API url
+        day1 = weather_data['days']
+        print(day1)
+        for day in weather_data['days']:
+            print(f"Date: {day['datetime']}, Temp Max: {day['tempmax']}, Temp Min: {day['tempmin']}")
+        speak(f"The current weather for {weather_data['address']} is {day['conditions']}]")
     else:
         speak("I'm sorry, I don't know how to do that yet.")
     return False
