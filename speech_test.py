@@ -2,17 +2,31 @@
 import speech_recognition as sr
 import pyttsx3
 import requests
+from datetime import date
+from dotenv import find_dotenv, load_dotenv
+import os 
+
+# Load environment key & host from .env file
+load_dotenv()
+
+API_KEY = os.getenv('API_KEY')
+db_host = os.getenv('DB_HOST')
+
+print(f"API Key loaded: {API_KEY}")
+print(f"Database Host: {db_host}")
 
 # Initialize recognizer class (for recognizing speech)
 r= sr.Recognizer()
 
-#Initialize TTS engine
+# Initialize TTS engine
 engine = pyttsx3.init()
 
-#Weather API Key and Base URL
-API_KEY = "yourkey"
-#Url Format after timeline/location/date/key
-weather_url = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/08902/2025-12-10?key=apikey"
+
+# Weather Date for current date
+weather_date = date.today()
+
+# Weather API Url Format after timeline/location/date/key
+weather_url = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/08902/{weather_date}?key={API_KEY}"
 
 # Initialize requests
 response = requests.get(weather_url)
