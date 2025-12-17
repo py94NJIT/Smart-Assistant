@@ -1,0 +1,22 @@
+
+# Virtual Environment (The most important one)
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment variables / Secrets (Recommended for security)
+.env
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE settings (Optional, but keeps the repo clean)
+.vscode/
+.idea/
