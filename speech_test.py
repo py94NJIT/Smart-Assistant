@@ -12,9 +12,6 @@ load_dotenv()
 API_KEY = os.getenv('API_KEY')
 db_host = os.getenv('DB_HOST')
 
-print(f"API Key loaded: {API_KEY}")
-print(f"Database Host: {db_host}")
-
 # Initialize recognizer class (for recognizing speech)
 r= sr.Recognizer()
 
@@ -22,7 +19,7 @@ r= sr.Recognizer()
 engine = pyttsx3.init()
 
 
-# Weather Date for current date
+# Weather Date for current date YYYY-MM-DD
 weather_date = date.today()
 
 # Weather API Url Format after timeline/location/date/key
@@ -69,12 +66,11 @@ def process_command(command):
         return True
     elif "weather" in command:
         # Location based on current user location
-        #day is specified date in API url
-        day1 = weather_data['days']
-        print(day1)
-        for day in weather_data['days']:
-            print(f"Date: {day['datetime']}, Temp Max: {day['tempmax']}, Temp Min: {day['tempmin']}")
-        speak(f"The current weather for {weather_data['address']} is {day['conditions']}]")
+        #day is for today's date
+        day = weather_data['days'][0]
+        
+        print(f"Date: {day['datetime']}, High: {day['tempmax']}, Temp Min: {day['tempmin']}")
+        speak(f"The current weather for {weather_data['address']} is {day['temp']} degrees and is {day['conditions']} with a high of {day['tempmax']} and a low of {day['tempmin']}")
     else:
         speak("I'm sorry, I don't know how to do that yet.")
     return False
